@@ -1,23 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import React from 'react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, defer } from 'react-router-dom'
 
-import MainPage from './components/pages/MainPage'
-import CatalogPage from './components/pages/CatalogPage'
+import MainPage from './components/pages/MainPage/MainPage'
+import CatalogPage from './components/pages/CatalogPage/CatalogPage'
 import AboutStorePage from './components/pages/AboutStorePage'
 import ContactsPage from './components/pages/ContactsPage'
 import ErrorPage from './components/pages/404Page'
+import requestTopSales from './components/pages/MainPage/requestTopSales'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
+    loader: async () => {
+      const hitsPromise = requestTopSales();
+      return defer({ hitsPromise });
+    }
   },
   {
     path: '/catalog.html',
