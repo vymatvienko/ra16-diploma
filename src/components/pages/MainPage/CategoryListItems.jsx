@@ -1,12 +1,13 @@
-const CategoryListItems = ({ props, categoryActive, setCategoryActive, setCount, setItems, setUpdate, update, setNewCards }) => {
+const CategoryListItems = ({ props, categoryActive, setCategoryActive, setSearchOptions }) => {
     
     const activeClassCategory = (e, category) => {
         e.preventDefault();
         setCategoryActive(category);
-        setCount(6);
-        setItems([]);
-        setUpdate(update + 1);
-        setNewCards(0);
+        setSearchOptions(prevState => ({
+            ...prevState,
+            append: false,
+            offset: 0
+        }));
     }
 
     return (

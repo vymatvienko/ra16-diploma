@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const Footer = () => {
     return (
         <footer className="container bg-light footer">
@@ -6,9 +8,9 @@ const Footer = () => {
                 <section>
                     <h5>Информация</h5>
                     <ul className="nav flex-column">
-                    <li className="nav-item"><a href="/about.html" className="nav-link">О магазине</a></li>
-                    <li className="nav-item"><a href="/catalog.html" className="nav-link">Каталог</a></li>
-                    <li className="nav-item"><a href="/contacts.html" className="nav-link">Контакты</a></li>
+                    <li className="nav-item"><Link to="/about.html" className="nav-link">О магазине</Link></li>
+                    <li className="nav-item"><Link to="/catalog.html" className="nav-link">Каталог</Link></li>
+                    <li className="nav-item"><Link to="/contacts.html" className="nav-link">Контакты</Link></li>
                     </ul>
                 </section>
                 </div>

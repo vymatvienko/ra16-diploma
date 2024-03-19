@@ -1,7 +1,6 @@
 import TopSalesCard from "./TopSalesCard"
 
 const TopSalesList = ({ hits }) => {
-    // console.log(hits)
     return (
         <>
             <section className="container top-sales">

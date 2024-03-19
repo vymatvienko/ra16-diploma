@@ -10,6 +10,8 @@ import AboutStorePage from './components/pages/AboutStorePage'
 import ContactsPage from './components/pages/ContactsPage'
 import ErrorPage from './components/pages/404Page'
 import requestTopSales from './components/pages/MainPage/requestTopSales'
+import OrderPage from './components/pages/OrderPage/OrderPage'
+import CartPage from './components/pages/CartPage/CartPage'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,15 @@ const router = createBrowserRouter([
     path: '/contacts.html',
     element: <ContactsPage />,
   },
+  {
+    path: 'catalog/:id.html',
+    element: <OrderPage />
+  },
+  {
+    path: '/cart.html',
+    element: <CartPage />
+  },
+
 ])
 
 function App() {
