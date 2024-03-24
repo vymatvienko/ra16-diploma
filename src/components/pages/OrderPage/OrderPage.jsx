@@ -1,18 +1,23 @@
 import Header from "../../Header"
 import Footer from "../../Footer"
 import { useParams } from "react-router-dom"
-import { Async } from "react-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import Loader from "../../Loader";
 
 const OrderPage = () => {
     const id = useParams();
-    // console.log(id);
+    const [load, setLoad] = useState(false);
+    const [data, setData] = useState({});
 
     const requestOrderPage = async () => {
-        const response = await fetch(`http://localhost:7070/api/items/${id.id}`);
-        return await response.json();
+        try {
+            const response = await fetch(`http://localhost:7070/api/items/${id.id}`);
+            setData(await response.json());
+            setLoad(true);          
+        } catch (error) {
+            alert("При загрузке данных произошла ошибка, попробуйте ещё раз.");
+        }
     }
 
     useEffect(() => {
@@ -22,16 +27,7 @@ const OrderPage = () => {
     return (
         <>
             <Header />
-            <Async promiseFn={requestOrderPage}>
-            <Async.Pending>
-                <Loader />
-            </Async.Pending>
-            <Async.Fulfilled>
-                {data => (
-                    <ProductList data={data} />
-                )}
-            </Async.Fulfilled>
-            </Async>
+            {!load ? <Loader /> : <ProductList data={data} />}
             <Footer />
         </>
     )

@@ -1,30 +1,49 @@
 import { useSelector, useDispatch } from "react-redux"
 import { changeUserForm, submitCart } from "../../../store/slice/cart/reducer"
+import { clearCart } from "../../../store/slice/cart/reducer";
 
-const CartUserForm = () => {
-
+const CartUserForm = ({ setIsLoaded }) => {
     const submitForm = useSelector(state => state.cart.submitForm);
     const dispatch = useDispatch();
 
     const submitOrder = async (order) => {
-        const response = await fetch('http://localhost:7070/api/order', {
-            method: 'POST',
-            body: JSON.stringify(order),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        console.log(response.status);
+        try {
+            await fetch('http://localhost:7070/api/order', {
+                method: 'POST',
+                body: JSON.stringify(order),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            localStorage.clear();
+            dispatch(clearCart());
+            alert("Ваш заказн успешно сформирован!");
+            setIsLoaded(true);
+        } catch (error) {
+            alert('Что-то пошло не так, попробуйте ещё раз');
+        }
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
+        setIsLoaded(false);
         dispatch(submitCart());
         submitOrder(submitForm);
     }
 
     const onChange = (e) => {
         dispatch(changeUserForm({ [e.target.name]: e.target.value }));
+    }
+
+    const checkboxChange = () => {
+        const agreementCheckbox = document.getElementById('agreement');
+        const userFormSubmit = document.getElementById('userFormSubmit');
+        
+        if (agreementCheckbox.checked) {
+            userFormSubmit.disabled = false
+        } else {
+            userFormSubmit.disabled = true
+        }
     }
 
     return (
@@ -39,10 +58,10 @@ const CartUserForm = () => {
                 <input className="form-control" id="address" name="address" placeholder="Адрес доставки" onChange={onChange} />
                 </div>
                 <div className="form-group form-check">
-                <input type="checkbox" className="form-check-input" id="agreement" />
+                <input type="checkbox" className="form-check-input" id="agreement" onChange={checkboxChange}/>
                 <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
                 </div>
-                <button type="submit" className="btn btn-outline-secondary">Оформить</button>
+                <button type="submit" className="btn btn-outline-secondary" id="userFormSubmit" disabled="disabled">Оформить</button>
             </form>
         </>
     )

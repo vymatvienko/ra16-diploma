@@ -2,11 +2,13 @@ import Banner from "./Banner"
 import headerLogo from '../img/header-logo.png'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"
+import { searchText } from "../store/slice/search/searchReducer";
 
 const Header = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onClickSearch = () => {
         const searchButton = document.getElementById('search-expander');
@@ -17,9 +19,12 @@ const Header = () => {
 
     const onSubmitSearch = (e) => {
         e.preventDefault();
-        navigate('/catalog.html');
-        
+        const form = e.target;
+        const input = form.elements.search;
+        dispatch(searchText({ search: input.value }));
+        navigate('/catalog.html');       
     }
+
 
     const productsInCart = useSelector(state => state.cart.itemsInCart.length);
 
@@ -58,7 +63,7 @@ const Header = () => {
                         </Link>
                         </div>
                         <form data-id="search-form" id="search-form" className="header-controls-search-form form-inline invisible" onSubmit={onSubmitSearch}>
-                        <input className="form-control" placeholder="Поиск"></input>
+                        <input className="form-control" name="search" placeholder="Поиск" />
                         </form>
                     </div>
                     </div>

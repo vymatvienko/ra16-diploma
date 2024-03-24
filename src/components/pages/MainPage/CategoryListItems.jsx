@@ -1,4 +1,4 @@
-const CategoryListItems = ({ props, categoryActive, setCategoryActive, setSearchOptions }) => {
+const CategoryListItems = ({ props, categoryActive, setCategoryActive, setSearchOptions, setLoad }) => {
     
     const activeClassCategory = (e, category) => {
         e.preventDefault();
@@ -8,6 +8,7 @@ const CategoryListItems = ({ props, categoryActive, setCategoryActive, setSearch
             append: false,
             offset: 0
         }));
+        setLoad(false);
     }
 
     return (

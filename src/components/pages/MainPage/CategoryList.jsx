@@ -1,6 +1,6 @@
 import CategoryListItems from "./CategoryListItems";
 
-const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOptions }) => {
+const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOptions, setLoad }) => {
 
     const activeClassCategory = (e, category) => {
         e.preventDefault();
@@ -10,6 +10,7 @@ const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOption
             append: false,
             offset: 0,
         }));
+        setLoad(false);
     }
 
     const allCategories = { title: 'Все' };
@@ -20,7 +21,16 @@ const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOption
                 <li className="nav-item">
                     <a className={categoryActive === allCategories.id ? "nav-link active" : "nav-link"} onClick={e => activeClassCategory(e, allCategories.id)}>{allCategories.title}</a>
                 </li>
-                {data.map((category) => <CategoryListItems key={category.id} props={category} categoryActive={categoryActive} setCategoryActive={setCategoryActive} setSearchOptions={setSearchOptions} />)}
+                {data.map((category) => 
+                    <CategoryListItems 
+                        key={category.id} 
+                        props={category} 
+                        categoryActive={categoryActive} 
+                        setCategoryActive={setCategoryActive} 
+                        setSearchOptions={setSearchOptions} 
+                        setLoad={setLoad} 
+                    />
+                )}
             </ul>
         </>
     )

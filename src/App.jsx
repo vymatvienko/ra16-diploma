@@ -12,6 +12,8 @@ import ErrorPage from './components/pages/404Page'
 import requestTopSales from './components/pages/MainPage/requestTopSales'
 import OrderPage from './components/pages/OrderPage/OrderPage'
 import CartPage from './components/pages/CartPage/CartPage'
+import { useSelector, useDispatch } from "react-redux"
+import { setItemInCart, refreshPage } from './store/slice/cart/reducer'
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,20 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const dispatch = useDispatch();
+  const refresh = useSelector(state => state.cart.refreshPage.refresh);
+  
+  if (refresh) {
+    const keys = Object.keys(localStorage);
+    
+    for(let key of keys) {
+      if (refresh) {
+        dispatch(setItemInCart(JSON.parse(localStorage.getItem(key))));
+        dispatch(refreshPage({ refresh: false }));
+      }
+    }
+  }
+
   return <RouterProvider router={router} />
 }
 

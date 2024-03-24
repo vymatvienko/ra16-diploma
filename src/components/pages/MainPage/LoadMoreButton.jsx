@@ -4,7 +4,7 @@ import { useState } from "react";
 const LoadMoreButton = () => {
     const [data, setData] = useState([]);
     const loadMoreRequest = async () => {
-        const response = await fetch('http://localhost:7070/api/items?offset=6')
+        await fetch('http://localhost:7070/api/items?offset=6')
             .then(response => response.json())
             .then(json => {
                 setData(prevState => (prevState, json));
