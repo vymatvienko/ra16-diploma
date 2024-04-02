@@ -35,10 +35,8 @@ const cartSlice = createSlice({
             
         },
         deleteItemFromCart: (state, action) => {
-            console.log(action.payload);
             state.itemsInCart = state.itemsInCart.filter(
                 item => item.id !== action.payload.id 
-                // && item.size !== action.payload.size
             )
         },
         cartChangeForm: (state, action) => {

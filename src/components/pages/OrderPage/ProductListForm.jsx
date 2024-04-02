@@ -56,7 +56,7 @@ const ProductListForm = ({ items }) => {
                 totalPrice: items.price * form.count + totalPriceItemInCart,
             }));
             dispatch(cartChangeForm({ size: null, count: 1 }));
-            navigate('/cart.html');
+            navigate('/cart');
         } else {
             dispatch(setItemInCart({
                 id: items.id,
@@ -75,7 +75,7 @@ const ProductListForm = ({ items }) => {
                 totalPrice: items.price * form.count,
             }));
             dispatch(cartChangeForm({ size: null, count: 1 }));
-            navigate('/cart.html');
+            navigate('/cart');
         }
     }
 

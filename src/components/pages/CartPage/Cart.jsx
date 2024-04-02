@@ -2,13 +2,10 @@ import { useSelector, useDispatch } from "react-redux"
 import { deleteItemFromCart } from "../../../store/slice/cart/reducer";
 import CartItems from "./CartItems";
 import CartUserForm from "./CartUserForm";
-import { useState } from "react";
-import Loader from "../../Loader";
 
 const Cart = () => {
     const dispatch = useDispatch();
     const items = useSelector(state => state.cart.itemsInCart);
-    const [isLoaded, setIsLoaded] = useState(true);
 
     const removeItem = (e, item) => {
         e.preventDefault();
@@ -18,7 +15,6 @@ const Cart = () => {
 
     return (
         <>
-        {!isLoaded ? <Loader /> : 
             <main className="container">
                 <div className="row">
                     <div className="col">
@@ -40,11 +36,12 @@ const Cart = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {items.map((item, key) =>
+                                {items.map((item, index) =>
                                     <CartItems 
                                         item={item}
-                                        key={key}
+                                        key={index}
                                         removeItem={removeItem}
+                                        index={index}
                                     />
                                 )}
                                     <tr>
@@ -57,17 +54,16 @@ const Cart = () => {
                             <section className="order">
                                 <h2 className="text-center">Оформить заказ</h2>
                                 <div className="card" style={{ maxWidth: '30rem', margin: '0 auto' }}>
-                                <CartUserForm setIsLoaded={setIsLoaded}/>
+                                <CartUserForm />
                                 </div>
                             </section>
                         </>
                         :
-                        <section>Ваша корзина пуста</section>
+                        <section className="text-center">Ваша корзина пуста</section>
                     }
                     </div>
                 </div>
             </main>
-        }
         </>
     )
 }

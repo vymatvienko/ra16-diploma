@@ -22,7 +22,7 @@ const Header = () => {
         const form = e.target;
         const input = form.elements.search;
         dispatch(searchText({ search: input.value }));
-        navigate('/catalog.html');       
+        navigate('/catalog');
     }
 
 
@@ -42,20 +42,20 @@ const Header = () => {
                             <Link className="nav-link" to="/">Главная</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/catalog.html">Каталог</Link>
+                            <Link className="nav-link" to="/catalog">Каталог</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/about.html">О магазине</Link>
+                            <Link className="nav-link" to="/about">О магазине</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/contacts.html">Контакты</Link>
+                            <Link className="nav-link" to="/contacts">Контакты</Link>
                         </li>
                     </ul>
                     <div>
                         <div className="header-controls-pics">
                         <div data-id="search-expander" id="search-expander" className="header-controls-pic header-controls-search" onClick={onClickSearch}></div>
                         {/* <!-- Do programmatic navigation on click to /cart.html --> */}
-                        <Link className="header-controls-pic header-controls-cart" to="/cart.html">
+                        <Link className="header-controls-pic header-controls-cart" to="/cart">
                             {productsInCart > 0 && 
                             <div className="header-controls-cart-full">{productsInCart}</div>
                             }
