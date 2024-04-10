@@ -1,10 +1,10 @@
 import CategoryListItems from "./CategoryListItems";
 
-const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOptions, setLoad }) => {
+const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOptions, setLoad, searchRequest }) => {
 
-    const activeClassCategory = (e, category) => {
+    const activeClassCategory = (e) => {
         e.preventDefault();
-        setCategoryActive(category);
+        setCategoryActive(0);
         setSearchOptions(prevState => ({
             ...prevState,
             append: false,
@@ -13,13 +13,26 @@ const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOption
         setLoad(false);
     }
 
-    const allCategories = { title: 'Все' };
+    const allCategories = { title: 'Все', id: 0 };
+
+    let id = 0;
+    if (categoryActive === undefined) {
+        id = 0;
+    } else {
+        id = categoryActive;
+    }
+
+    const onClick = (e) => {
+        activeClassCategory(e);
+        const form = document.getElementById('search-input');
+        searchRequest(form.value);
+    }
 
     return (
         <>
             <ul className="catalog-categories nav justify-content-center">
                 <li className="nav-item">
-                    <a className={categoryActive === allCategories.id ? "nav-link active" : "nav-link"} onClick={e => activeClassCategory(e, allCategories.id)}>{allCategories.title}</a>
+                    <a className={id === allCategories.id ? "nav-link active" : "nav-link"} onClick={onClick}>{allCategories.title}</a>
                 </li>
                 {data.map((category) => 
                     <CategoryListItems 
@@ -29,6 +42,7 @@ const CategoryList = ({ data, categoryActive, setCategoryActive, setSearchOption
                         setCategoryActive={setCategoryActive} 
                         setSearchOptions={setSearchOptions} 
                         setLoad={setLoad} 
+                        searchRequest={searchRequest}
                     />
                 )}
             </ul>

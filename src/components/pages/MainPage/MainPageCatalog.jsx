@@ -24,7 +24,6 @@ const Catalog = () => {
         try {
             const response = await fetch('http://localhost:7070/api/categories');
             setCategoriesList(await response.json());
-            setLoad(true);
         } catch (error) {
             setRequest(false);
         }

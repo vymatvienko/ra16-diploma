@@ -1,16 +1,16 @@
 import { useState } from "react"
 import Catalog from "./Catalog";
 
-const RequestFailCatalog = () => {
+const RequestFailCatalog = ({ activeCategory }) => {
     const [request, setRequest] = useState(false);
     
     const onClick = () => {
         setRequest(true);
     }
-
+    
     return (
         <>
-            {request ? <Catalog /> : 
+            {request ? <Catalog activeCategory={activeCategory} /> : 
                 <>
                     <section className="catalog container">
                         <h2 className="text-center">Каталог</h2>

@@ -9,7 +9,7 @@ const TopSalesCard = ({ props }) => {
                 <img src={images[0]}
                 className="catalog-item-card-img card-img-top" alt={title} />
                 <div className="card-body">
-                <p className="card-text">{title}</p>
+                <p className="card-text card-text-title">{title}</p>
                 <p className="card-text">{`${price} руб.`}</p>
                 <Link to={url} className="btn btn-outline-primary">Заказать</Link>
                 </div>

@@ -3,11 +3,14 @@ import React, { useState, useEffect } from "react";
 import CatalogCardList from "../MainPage/CatalogCardList";
 import Search from "./Search";
 import Loader from "../../Loader";
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import RequestFailCatalog from "./RequestFailCatalog";
 import EmptySearch from "./EmptySearch";
+import { searchText } from "../../../store/slice/search/searchReducer";
 
-const Catalog = () => {
+const Catalog = ({ activeCategory }) => {
+
+    const dispatch = useDispatch();
     
     const [items, setItems] = useState([]);
     const [newCards, setNewCards] = useState(0);
@@ -17,7 +20,8 @@ const Catalog = () => {
     const [loadMore, setLoadMore] = useState(true);
     const [request, setRequest] = useState(true);
 
-    const { categoryId } = searchOptions;
+    const { categoryId = activeCategory } = searchOptions;
+    
     const setCategoryId = (categoryId) => setSearchOptions(prevState => ({
         ...prevState,
         categoryId,
@@ -92,21 +96,22 @@ const Catalog = () => {
             append: false,
             offset: 0
         }));
+        dispatch(searchText({ search: searchQuery }));      
     }
 
     const headerSearchText = useSelector(state => state.search.searchInput.search);
 
-    if (headerSearchText !== '') {
-        useEffect(() => {
+    useEffect(() => {
+        if (headerSearchText !== '') {
             searchRequest(headerSearchText);
-        }, []);
-    }
+        }
+    }, []);
 
     const showLoadMore = newCards === 6;
 
     return (
         <>
-            {!request ? <RequestFailCatalog /> :
+            {!request ? <RequestFailCatalog activeCategory={categoryId} /> :
                 <section className="catalog container">
                     <h2 className="text-center">Каталог</h2>
                     <Search onSearch={searchRequest} setLoad={setLoad}/>
@@ -118,6 +123,7 @@ const Catalog = () => {
                                 setCategoryActive={setCategoryId}
                                 setSearchOptions={setSearchOptions}
                                 setLoad={setLoad}
+                                searchRequest={searchRequest}
                             />
                             {items.length === 0 ? <EmptySearch /> :
                                 <>

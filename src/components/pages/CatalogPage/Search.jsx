@@ -16,7 +16,8 @@ const Search = ({ onSearch, setLoad }) => {
         <>
             <form className="catalog-search-form form-inline container" onSubmit={onSubmit}>
                 <input 
-                    className="form-control" 
+                    className="form-control"
+                    id="search-input"
                     type="text" 
                     placeholder="Поиск" 
                     name="request"
